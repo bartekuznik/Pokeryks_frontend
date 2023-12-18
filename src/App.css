@@ -1,5 +1,61 @@
 .App {
-  text-align: center;
+  background-image: url('../public/images/second.jpg');
+  width: 100%;
+  height: 926px;
+  background-size: cover;
+  background-position: center;
+}
+
+.rank--record{
+  border: 1px solid white;
+}
+
+.rank--div{
+  margin-top: 30px;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  width: 900px;
+  border: 1px solid white;
+}
+
+.new{
+  margin-top: 30px;
+  width: 100%;
+  height: 800px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.rank--outer{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.inner{
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: black;
+  height: 700px;
+  width: 600px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.more--inner{
+  
+  border-radius: 10px;
+  margin-top: 20px;
+  height: 500px;
+  width: 500px;
+  background-image: url('../public/images/forth.jpg');
+  background-size: cover;
 }
 
 .App-logo {
@@ -26,6 +82,13 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.form--div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
 }
 
 @keyframes App-logo-spin {

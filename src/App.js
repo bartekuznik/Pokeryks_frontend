@@ -6,11 +6,14 @@ import Shop from "./Shop"
 import Rank from "./Rank"
 import Login from "./Login"
 import Register from "./Register"
+import Play from "./Play"
+import { UserProvider } from './UserContext';
 import "./App.css"
 
 
 function App() {
   return (
+    <UserProvider>
     <div className="App">
       <Routes>
         <Route path="/" element={ <Home/> } />
@@ -19,8 +22,10 @@ function App() {
         <Route path="/rank" element={ <Rank/> } />
         <Route path="/login" element={ <Login/> } />
         <Route path="/register" element={ <Register/> } />
+        <Route path="/play" element={ <Play/> } />
       </Routes>
     </div>
+    </UserProvider>
   )
 }
 

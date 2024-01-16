@@ -189,12 +189,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 60px); /* Adjust this value to match your navbar's height */
+  min-height: calc(100vh - 60px); 
 }
 
 .about-content {
   width: 600px;
-  background-color: #6D4C41; /* Dark wood color for the table */
+  background-color: #6D4C41; 
   border-radius: 10px;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

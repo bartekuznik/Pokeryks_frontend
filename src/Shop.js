@@ -2,11 +2,10 @@ import React, { useContext } from "react";
 import NavBarr from "./components/NavBarr";
 import "./App.css";
 import Button from "react-bootstrap/Button";
-import { UserContext } from "./UserContext"; // Import UserContext
+import { UserContext } from "./UserContext";
 
 const Shop = () => {
-  const { userData, setUserData } = useContext(UserContext); // Use UserContext
-
+  const { userData, setUserData } = useContext(UserContext); 
   const handleVipPurchase = async () => {
     if (!userData) {
       alert("You must be logged in to make a purchase.");
@@ -20,15 +19,15 @@ const Shop = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: userData.username, // Use username from userData
-          vip: "1", // Assuming '1' indicates VIP status
-          endpoint: "", // Any additional data required by your server
+          username: userData.username, 
+          vip: "1",
+          endpoint: "", 
         }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        setUserData({ ...userData, vip: 1 }); // Update userData with new VIP status
+        setUserData({ ...userData, vip: 1 }); 
         alert("VIP Purchase successful!");
       } else {
         alert("VIP Purchase failed: " + data.message);
@@ -54,16 +53,15 @@ const Shop = () => {
             body: JSON.stringify({
                 username: userData.username,
                 tokens: amount,
-                endpoint: "", // Any additional data required by your server
+                endpoint: "", 
             }),
         });
 
         const data = await response.json();
         if (response.ok) {
-            setUserData({ ...userData, money: data.money }); // Update userData with the new token amount from the response
+            setUserData({ ...userData, money: data.money }); 
             alert(`${amount} Tokens Purchase successful!`);
         } else {
-            // Handle different types of errors based on your API's response structure
             const errorMessage = data.detail || "An error occurred during the purchase.";
             alert("Tokens Purchase failed: " + errorMessage);
         }

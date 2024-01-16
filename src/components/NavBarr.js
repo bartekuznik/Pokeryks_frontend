@@ -9,8 +9,8 @@ export default function NavBarr() {
   const { userData, setUserData } = useContext(UserContext);
 
   const handleLogout = () => {
-    setUserData(null); // Clear user data from context
-    localStorage.removeItem("userData"); // Clear user data from localStorage
+    setUserData(null); // usuwamy z context
+    localStorage.removeItem("userData"); // suwamy z localStorage
   };
 
   return (

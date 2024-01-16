@@ -1,34 +1,19 @@
 .App {
   background-image: url('/images/second.jpg');
   width: 100%;
-  height: 926px;
+  height: 100vh;
   background-size: cover;
   background-position: center;
 }
 
-.rank--record{
-  border: 1px solid white;
-}
-
-.rank--div{
-  margin-top: 30px;
-  background-color: black;
-  color: white;
-  border-radius: 10px;
-  width: 900px;
-  border: 1px solid white;
+:root {
+  --navbar-height: 60px;
 }
 
 .new{
   margin-top: 30px;
   width: 100%;
   height: 800px;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-}
-
-.rank--outer{
   display: flex;
   align-content: center;
   justify-content: center;
@@ -98,4 +83,133 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+ /* Rank */
+ .rank--outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.rank--div {
+  width: 600px;
+  background-color: #6D4C41; /* Dark wood color for the table */
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rank--div h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.rank-record {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 8px 16px;
+  margin: 10px 0;
+  background-color: transparent;
+  color: white;
+}
+
+.refresh-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #A9A9A9; /* Dark gray color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.refresh-button:hover {
+  background-color: #808080;
+}
+
+/* Shop */
+.shop-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - var(--navbar-height));
+  padding-top: var(--navbar-height); /* This ensures content starts below the navbar */
+}
+
+.shop-content {
+  width: 600px;
+  background-color: #6D4C41; /* Dark wood color for the table */
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: white;
+}
+
+.shop-content h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.shop-content p {
+  margin-bottom: 20px;
+}
+
+.shop-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #A9A9A9; /* Dark gray color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.shop-content button:hover {
+  background-color: #808080;
+}
+
+/* About */
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px); /* Adjust this value to match your navbar's height */
+}
+
+.about-content {
+  width: 600px;
+  background-color: #6D4C41; /* Dark wood color for the table */
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: white;
+  margin-top: var(--navbar-height);
+}
+
+.about-content h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.about-content p {
+  text-align: left;
+  margin-bottom: 20px;
 }

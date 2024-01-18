@@ -5,31 +5,16 @@ import io from 'socket.io-client';
 
 const Play = () => {
     useEffect(() => {
-        const socket = io('ws://127.0.0.1:8000/ws/socket-server');  // Zastąp adresem twojego backendu.
-    
-        // Obsługa zdarzenia po nawiązaniu połączenia z serwerem WebSocket.
-        socket.on('connect', () => {
-          console.log('Połączono z serwerem WebSocket!');
-        });
-    
-        // Obsługa zdarzenia po otrzymaniu wiadomości od serwera WebSocket.
-        socket.on('message', (data) => {
-          console.log('Otrzymano wiadomość:', data);
-          // Tutaj możesz zaktualizować stan komponentu na podstawie otrzymanych danych.
-        });
-    
-        // Obsługa zdarzenia po rozłączeniu z serwerem WebSocket.
-        socket.on('disconnect', () => {
-          console.log('Rozłączono z serwerem WebSocket!');
-        });
-    
-        // Opcjonalnie: Wywołaj tę funkcję, aby zamknąć połączenie przy odmontowywaniu komponentu.
-        return () => {
-            if (socket.readyState === 1) { // <-- This is important
-                socket.close();
-            }
-        };
-      }, []);
+        //const socket = new WebSocket("ws://localhost:8080")
+        const socket = new WebSocket("ws://127.0.0.1:8000/ws/socket-server")
+            socket.addEventListener("open", (event) => {
+            })
+
+        // Listen for messages
+            socket.addEventListener("message", (event) => {
+            console.log("Message from server ", event.data)
+        }) 
+        }, []);
     return (
         <div>
             <NavBarr />

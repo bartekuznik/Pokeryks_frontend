@@ -32,7 +32,7 @@ const Rank = () => {
                     <div className='rank-table'>
                         {ranks.map(e => (
                             <div key={e.id} className='rank-record'>
-                                <div className='rank-record-player'>Player {e.player}</div>
+                                <div className='rank-record-player'>Player {e.username}</div>
                                 <div className='rank-record-wins'>{e.win_number} wins</div>
                             </div>
                         ))}

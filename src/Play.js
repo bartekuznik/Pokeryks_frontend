@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavBarr from './components/NavBarr';
 import './App.css';
+import io from 'socket.io-client';
 
 const Play = () => {
+    useEffect(() => {
+        const socket = io('ws://127.0.0.1:8000/ws/socket-server');  // Zastąp adresem twojego backendu.
+    
+        // Obsługa zdarzenia po nawiązaniu połączenia z serwerem WebSocket.
+        socket.on('connect', () => {
+          console.log('Połączono z serwerem WebSocket!');
+        });
+    
+        // Obsługa zdarzenia po otrzymaniu wiadomości od serwera WebSocket.
+        socket.on('message', (data) => {
+          console.log('Otrzymano wiadomość:', data);
+          // Tutaj możesz zaktualizować stan komponentu na podstawie otrzymanych danych.
+        });
+    
+        // Obsługa zdarzenia po rozłączeniu z serwerem WebSocket.
+        socket.on('disconnect', () => {
+          console.log('Rozłączono z serwerem WebSocket!');
+        });
+    
+        // Opcjonalnie: Wywołaj tę funkcję, aby zamknąć połączenie przy odmontowywaniu komponentu.
+        return () => {
+            if (socket.readyState === 1) { // <-- This is important
+                socket.close();
+            }
+        };
+      }, []);
     return (
         <div>
             <NavBarr />

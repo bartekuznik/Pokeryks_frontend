@@ -19,7 +19,7 @@ const Game = () => {
         const newSocket = new WebSocket(`ws://localhost:${serverIp}/ws/socket-server`);
 
         newSocket.addEventListener('open', () => {
-            const playerInfo = new PlayerInfoDTO(userData.username, userData.tokens, userData.vip);
+            const playerInfo = new PlayerInfoDTO(userData.username, userData.money, userData.vip);
             newSocket.send(JSON.stringify(playerInfo));
         });
 
@@ -87,12 +87,12 @@ const Game = () => {
                                     <div className="player-tokens">Tokens: {player.tokens}</div>
                                     <div className="player-cards">
                                         <img
-                                            src={`./public/images/cards/${player.card1}.png`}
+                                            src={`/images/cards/${player.card1}.png`}
                                             alt="Player Card 1"
                                             className="card-image"
                                         />
                                         <img
-                                            src={`./public/images/cards/${player.card2}.png`}
+                                            src={`/images/cards/${player.card2}.png`}
                                             alt="Player Card 2"
                                             className="card-image"
                                         />
@@ -110,23 +110,52 @@ const Game = () => {
 
 export default Game;
 
-// DTOs and other classes
 class PlayerInfoDTO {
-    // Make sure these properties match what your server expects
     constructor(player_nick, tokens, vip) {
         this.type = "PlayerInfo";
         this.player_nick = player_nick;
         this.tokens = tokens;
         this.vip = vip;
+        this.ip_address = '';
     }
 }
 
+// Move
 class Move {
-    // Make sure these properties match what your server expects
     constructor(nick, moveType, amount) {
         this.type = "Move";
         this.nick = nick;
         this.moveType = moveType;
         this.amount = amount;
+    }
+}
+
+// UpdateTable
+class UpdateTable {
+    constructor(cardsOnTable, playersInGame, nextPlayer, tokensOnTable, lastCall, isFinished) {
+        this.cardsOnTable = cardsOnTable;
+        this.playersInGame = playersInGame;
+        this.nextPlayer = nextPlayer || "";
+        this.tokensOnTable = tokensOnTable;
+        this.lastCall = lastCall;
+        this.isFinished = isFinished;
+    }
+}
+
+// CardDto
+class CardDto {
+    constructor(card) {
+        this.card = card || null;
+    }
+}
+
+// PlayerInGameDTO
+class PlayerInGameDTO {
+    constructor(nick, tokens, card1, card2, winPercentage) {
+        this.player_nick = nick;
+        this.tokens = tokens;
+        this.card_1 = card1;
+        this.card_2 = card2;
+        this.winPercentage = winPercentage || null;
     }
 }

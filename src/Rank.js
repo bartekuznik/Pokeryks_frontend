@@ -8,7 +8,10 @@ const useLeaderboard = (url) => {
     const fetchLeaderboard = useCallback(() => {
         fetch(url)
             .then(res => res.json())
-            .then(data => setRanks(data))
+            .then(data => {
+                const sortedData = data.sort((a, b) => b.win_number - a.win_number);
+                setRanks(sortedData);
+            })
             .catch(error => console.error('Error fetching leaderboard:', error));
     }, [url]);
 

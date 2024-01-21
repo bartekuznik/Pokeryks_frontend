@@ -213,3 +213,89 @@
   text-align: left;
   margin-bottom: 20px;
 }
+
+/* Servers */
+.server-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.server-item {
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  width: 300px; /* or any width you prefer */
+  text-align: center;
+}
+
+/* Add any additional styling you want for the server items */
+.server-item:hover {
+  background-color: #444;
+}
+
+/* Game */
+.game-container {
+  position: relative;
+  min-height: calc(100vh - var(--navbar-height)); /* Adjust this if you have a navbar */
+  /* Your existing styles for game-container */
+}
+
+.game-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: #333; /* Dark background for the control panel */
+  display: flex;
+  justify-content: space-around; /* This will space out your buttons evenly */
+  align-items: center;
+}
+
+.game-controls button,
+.game-controls span {
+  flex: 1; /* Give each button and the span equal width */
+  margin: 0 5px; /* Space out the buttons */
+  padding: 10px; /* Padding inside buttons */
+  background: #6D4C41; /* Button background color */
+  color: white; /* Button text color */
+  border: none;
+  border-radius: 5px; /* Rounded corners for buttons */
+  cursor: pointer;
+}
+
+.game-controls button:hover {
+  background: #A9A9A9; /* Button hover state color */
+}
+
+.game-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px; /* Space above the controls */
+}
+
+.table-cards {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.card-image {
+  width: 100px; /* Set the size of your card images */
+  height: auto;
+  margin: 0 5px;
+}
+
+.game-info {
+  text-align: center;
+  color: white; /* Or any color that matches your design */
+}
+

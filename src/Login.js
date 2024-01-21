@@ -31,6 +31,7 @@ const Login = () => {
 
             if (response.ok) {
                 const loginResponse = await response.json();
+                console.log(loginResponse)
                 setUserData(loginResponse); 
                 alert(`Successful login!`);
                 navigate('/');

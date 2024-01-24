@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Assuming you are using React Router
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBarr from "./components/NavBarr";
-import { UserContext } from "./UserContext"; // Import your UserContext
-import "./App.css"; // Make sure this import is here to apply your styles
+import { UserContext } from "./UserContext";
+import "./App.css";
 
 const ChooseServerScreen = () => {
   const [servers, setServers] = useState([]);
@@ -28,7 +28,7 @@ const ChooseServerScreen = () => {
       ...prevUserData,
       selectedServer: server,
     }));
-    navigate("/game"); // Adjust this to your Play.js route
+    navigate("/game"); 
   };
 
   return (
@@ -36,11 +36,10 @@ const ChooseServerScreen = () => {
       <NavBarr />
       <div className="server-list-container">
         {" "}
-        {/* Use the new CSS class here */}
         {servers.map((server, index) => (
           <div
             key={index}
-            className="server-item" // Use the new CSS class for server items
+            className="server-item" 
             onClick={() => handleServerClick(server)}
           >
             IP: {server.ip} - Occupancy: {server.occupation}

@@ -243,8 +243,21 @@
 /* Game */
 .game-container {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: calc(100vh - var(--navbar-height)); /* Adjust this if you have a navbar */
   /* Your existing styles for game-container */
+}
+
+.game-info {
+  text-align: left;
+  margin-left: 20px;
+  color: #fff; /* Adjust text color as needed */
+}
+
+.game-info p {
+  margin: 5px 0;
 }
 
 .game-controls {
@@ -277,25 +290,62 @@
 
 .game-table {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px; /* Space above the controls */
+  border: 2px solid #163020;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: #163020; /* Table color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 70%;
+  height: 70vh;
 }
 
-.table-cards {
+.community-cards {
+  width: 75%;
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
-}
-
-.card-image {
-  width: 100px; /* Set the size of your card images */
-  height: auto;
-  margin: 0 5px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 .game-info {
+  width: 25%;
+  text-align: left;
+  color: #fff; /* Adjust text color as needed */
+}
+
+.game-info p {
+  margin: 5px 0;
+}
+
+.card-image {
+  width: 100px; /* Adjust size as needed */
+  margin: 0 5px;
+}
+
+.player-info {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.player {
   text-align: center;
-  color: white; /* Or any color that matches your design */
+}
+
+.player-cards {
+  display: flex;
+  justify-content: center;
+}
+
+.player-nickname {
+  font-weight: bold;
+}
+
+.pot-info {
+  margin-bottom: 20px;
 }
 

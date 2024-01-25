@@ -9,7 +9,11 @@ const Game = () => {
   const { userData } = useContext(UserContext);
   const [socket, setSocket] = useState(null);
   const [gameState, setGameState] = useState(null);
+  const [communityCards, setCommunityCards] = useState(
+    new Array(5).fill("backcard")
+  );
   const navigate = useNavigate();
+  const cardsNumber = 5;
 
   // State to hold the current user's cards and other players
   const [currentUserCards, setCurrentUserCards] = useState({
@@ -63,7 +67,7 @@ const Game = () => {
         setGameState(message);
 
         // Find current user and other players
-        const currentPlayer = message.playersInGame.find(
+        let currentPlayer = message.playersInGame.find(
           (player) => player.player_nick === userData.username
         );
         const otherPlayers = message.playersInGame.filter(
@@ -73,23 +77,41 @@ const Game = () => {
         // Update current user's cards
         if (currentPlayer) {
           setCurrentUserCards({
-            card1: currentPlayer.card_1 && currentPlayer.card_1.card ? currentPlayer.card_1.card : "backcard",
-            card2: currentPlayer.card_2 && currentPlayer.card_2.card ? currentPlayer.card_2.card : "backcard"
+            card1:
+              currentPlayer.card_1 && currentPlayer.card_1.card
+                ? currentPlayer.card_1.card
+                : "backcard",
+            card2:
+              currentPlayer.card_2 && currentPlayer.card_2.card
+                ? currentPlayer.card_2.card
+                : "backcard",
           });
         }
 
-        // Update other players' cards to show backcards
+        // Update other players' cards to always show "backcard"
         setOtherPlayers(
-          otherPlayers.map(() => ({ card1: "backcard", card2: "backcard" }))
+          otherPlayers.map(() => ({
+            card1: "backcard",
+            card2: "backcard",
+          }))
         );
+
+        // Update community cards, ensuring there are always five cards
+        const updatedCommunityCards = message.cardsOnTable.map(
+          (card) => card.card || "backcard"
+        );
+        while (updatedCommunityCards.length < 5) {
+          updatedCommunityCards.push("backcard"); // Add "backcard" if less than five cards
+        }
+        setCommunityCards(updatedCommunityCards);
+
         break;
       case "PlayerJoined":
-        console.log("Player joined:", message.player_nick);
-        // Update your state/UI to show the new player
+        console.log("Player joined:", message);
         break;
       case "PlayerLeft":
-        console.log("Player left:", message.player_nick);
-        // Update your state/UI to remove the player
+        console.log("Player left:", message);
+        
         break;
       default:
         console.log("Unknown message type:", message);
@@ -124,30 +146,15 @@ const Game = () => {
 
   function importCardImage(cardFilename) {
     if (!cardFilename) {
-      console.error("Card filename is undefined or null.");
-      return null; // Return a default image or null
+      return require(`./cards/backcard.png`);
     }
 
     try {
       return require(`./cards/${cardFilename}.png`);
     } catch (e) {
-      console.error(`Failed to load image: ./cards/${cardFilename}.png`, e);
-      return null; // Return a default image or null
+      return require(`./cards/backcard.png`);
     }
   }
-
-  const renderPlayerCards = (player) => {
-    // Default to "backcard" if the card information is not provided
-    const card1 = player.card_1?.card || "backcard";
-    const card2 = player.card_2?.card || "backcard";
-
-    return (
-      <>
-        <img src={importCardImage(card1)} alt="Player Card 1" className="card-image" />
-        <img src={importCardImage(card2)} alt="Player Card 2" className="card-image" />
-      </>
-    );
-  };
 
   // Function to render all user boxes with their respective cards
   const renderUserBoxes = () => {
@@ -156,18 +163,44 @@ const Game = () => {
 
     if (gameState && gameState.playersInGame) {
       gameState.playersInGame.forEach((player, i) => {
+        // Check if the player is the current user to display actual cards or back of cards
+        const isCurrentUser = player.player_nick === userData.username;
+        const playerCards = isCurrentUser
+          ? currentUserCards
+          : { card1: "backcard", card2: "backcard" };
+
         userBoxes.push(
-          <div key={i} className={`user-box ${positions[i % positions.length]}`}>
-            {renderPlayerCards(player)}
-            <div className="user-info">
-              {player.player_nick} - Tokens: {player.tokens}
-            </div>
+          <div
+            key={i}
+            className={`user-box ${positions[i % positions.length]}`}
+          >
+            <img
+              src={importCardImage(playerCards.card1)}
+              alt="Player Card 1"
+              className="card-image"
+            />
+            <img
+              src={importCardImage(playerCards.card2)}
+              alt="Player Card 2"
+              className="card-image"
+            />
           </div>
         );
       });
     }
 
     return userBoxes;
+  };
+
+  const renderCommunityCards = () => {
+    return communityCards.map((card, index) => (
+      <img
+        key={index}
+        src={importCardImage(card)}
+        alt={`Community Card ${index + 1}`}
+        className="card-image"
+      />
+    ));
   };
 
   return (
@@ -180,17 +213,8 @@ const Game = () => {
             {renderUserBoxes()}
 
             <div className="community-cards">
-              {[...Array(5)].map((_, index) => {
-                const cardImage = importCardImage("backcard");
-                return (
-                  <img
-                    key={index}
-                    src={cardImage}
-                    alt="Community Card"
-                    className="card-image"
-                  />
-                );
-              })}
+              {/* Render community cards from the state */}
+              {renderCommunityCards()}
             </div>
             {/* Column for game information */}
             <div className="game-info">
@@ -206,8 +230,16 @@ const Game = () => {
             </div>
             {/* Display current user's cards */}
             <div className="user-box bottom-user">
-              <img src={importCardImage(currentUserCards.card1)} alt="Player Card 1" className="card-image" />
-              <img src={importCardImage(currentUserCards.card2)} alt="Player Card 2" className="card-image" />
+              <img
+                src={importCardImage(currentUserCards.card1)}
+                alt="Player Card 1"
+                className="card-image"
+              />
+              <img
+                src={importCardImage(currentUserCards.card2)}
+                alt="Player Card 2"
+                className="card-image"
+              />
               <div className="user-info">User tokens: {userData.money}</div>
             </div>
           </div>
@@ -258,13 +290,6 @@ class UpdateTable {
     this.tokensOnTable = tokensOnTable;
     this.lastCall = lastCall;
     this.isFinished = isFinished;
-  }
-}
-
-// CardDto
-class CardDto {
-  constructor(card) {
-    this.card = card || null;
   }
 }
 

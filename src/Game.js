@@ -66,42 +66,24 @@ const Game = () => {
         // Update game state
         setGameState(message);
 
-        // Find current user and other players
-        let currentPlayer = message.playersInGame.find(
+        // Find current user and update cards
+        const currentPlayer = message.playersInGame.find(
           (player) => player.player_nick === userData.username
         );
-        const otherPlayers = message.playersInGame.filter(
-          (player) => player.player_nick !== userData.username
-        );
 
-        // Update current user's cards
         if (currentPlayer) {
           setCurrentUserCards({
-            card1:
-              currentPlayer.card_1 && currentPlayer.card_1.card
-                ? currentPlayer.card_1.card
-                : "backcard",
-            card2:
-              currentPlayer.card_2 && currentPlayer.card_2.card
-                ? currentPlayer.card_2.card
-                : "backcard",
+            card1: currentPlayer.card_1?.card || "backcard",
+            card2: currentPlayer.card_2?.card || "backcard",
           });
         }
 
-        // Update other players' cards to always show "backcard"
-        setOtherPlayers(
-          otherPlayers.map(() => ({
-            card1: "backcard",
-            card2: "backcard",
-          }))
-        );
-
-        // Update community cards, ensuring there are always five cards
+        // Update community cards
         const updatedCommunityCards = message.cardsOnTable.map(
           (card) => card.card || "backcard"
         );
         while (updatedCommunityCards.length < 5) {
-          updatedCommunityCards.push("backcard"); // Add "backcard" if less than five cards
+          updatedCommunityCards.push("backcard");
         }
         setCommunityCards(updatedCommunityCards);
 
@@ -111,7 +93,7 @@ const Game = () => {
         break;
       case "PlayerLeft":
         console.log("Player left:", message);
-        
+
         break;
       default:
         console.log("Unknown message type:", message);
@@ -162,8 +144,15 @@ const Game = () => {
     const positions = ["bottom-user", "top-user", "right-user", "left-user"];
 
     if (gameState && gameState.playersInGame) {
-      gameState.playersInGame.forEach((player, i) => {
-        // Check if the player is the current user to display actual cards or back of cards
+      // Find the index of the current user in the playersInGame array
+      const currentUserIndex = gameState.playersInGame.findIndex(
+        (player) => player.player_nick === userData.username
+      );
+
+      // Determine the position index based on the current user's index
+      gameState.playersInGame.forEach((player, index) => {
+        const positionIndex =
+          (index - currentUserIndex + positions.length) % positions.length;
         const isCurrentUser = player.player_nick === userData.username;
         const playerCards = isCurrentUser
           ? currentUserCards
@@ -171,8 +160,8 @@ const Game = () => {
 
         userBoxes.push(
           <div
-            key={i}
-            className={`user-box ${positions[i % positions.length]}`}
+            key={player.player_nick}
+            className={`user-box ${positions[positionIndex]}`}
           >
             <img
               src={importCardImage(playerCards.card1)}
@@ -184,6 +173,9 @@ const Game = () => {
               alt="Player Card 2"
               className="card-image"
             />
+            <div className="user-info">
+              {player.player_nick} - Tokens: {player.tokens}
+            </div>
           </div>
         );
       });
@@ -191,7 +183,6 @@ const Game = () => {
 
     return userBoxes;
   };
-
   const renderCommunityCards = () => {
     return communityCards.map((card, index) => (
       <img

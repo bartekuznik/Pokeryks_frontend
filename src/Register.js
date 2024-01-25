@@ -28,7 +28,7 @@ export default function Register() {
       const responseData = await response.json();
       if (response.ok) {
         setUserData(responseData);
-        navigate("/"); // redirect do home
+        navigate("/");
       } else {
         alert(
           "Registration failed: " + (responseData.detail || "Unknown error")
